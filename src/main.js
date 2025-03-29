@@ -8,40 +8,18 @@ import { render, RenderPosition } from './framework/render.js';
 
 const bodyContainer = document.querySelector('.board-app');
 
-const initialTasks = {
-    backlog: [
-        'Изучить JS',
-        'Создать ToDo',
-    ],
-    progress: [
-        'Оптимизировать код',
-    ],
-    done: [
-        'Добавить новые функции',
-    ],
-    trash: [
-        'Погулять'
-    ]
-};
-
 render(new HeaderComponent(), bodyContainer, RenderPosition.BEFOREBEGIN);
 render(new AddTaskFormComponent(), bodyContainer, RenderPosition.AFTERBEGIN);
 
 const taskBoardComponent = new TaskBoardComponent();
 render(taskBoardComponent, bodyContainer, RenderPosition.BEFOREEND);
 
-Object.entries(initialTasks).forEach(([section, tasks]) => {
-    const taskListElement = taskBoardComponent.getElement().querySelector(`.${section}`);
-    const taskListComponent = new TaskListComponent();
+const selector = ['backlog', 'progress', 'done', 'trash'];
 
-    render(taskListComponent, taskListElement, RenderPosition.BEFOREEND);
-
-    tasks.forEach(task =>
-        render(new TaskComponent(task), taskListComponent.getElement(), RenderPosition.AFTERBEGIN)
-    );
-
-    if (section === 'trash') {
-        const deleteButton = new DeleteButtonComponent();
-        render(deleteButton, taskListComponent.getElement(), RenderPosition.AFTEREND);
-    }
-});
+for (let i = 0; i < 4; i++) {
+    const taskListComponent = new TaskListComponent(selector[i]);
+    render(taskListComponent, taskBoardComponent.getElement(), RenderPosition.BEFOREEND);
+    
+    const tasksListElement = taskListComponent.getElement().querySelector('ul');
+    for (let j = 0; j < 4; j++) render(new TaskComponent(), tasksListElement, RenderPosition.BEFOREEND);
+}
