@@ -1,26 +1,35 @@
 import { createElement } from '../framework/render.js';
 
-function createTaskListComponentTemplate(className) {
-    return `<div class="${className}"><h3>Название блока</h3><ul class="task-list"></ul></div>`;
+function createTaskListComponentTemplate(status) {
+    return `
+        <div class="${status}">
+            <ul class="task-list">
+            
+            </ul>
+        </div>
+    `;
 }
 
 export default class TaskListComponent {
-    constructor(className) {
-        this.className = className;
+    #status = null;
+    #element = null;
+
+    constructor(status) {
+        this.#status = status;
     }
 
     getTemplate() {
-        return createTaskListComponentTemplate(this.className);
+        return createTaskListComponentTemplate(this.#status);
     }
 
     getElement() {
-        if (!this.element) {
-            this.element = createElement(this.getTemplate());
+        if (!this.#element) {
+            this.#element = createElement(this.getTemplate());
         }
-        return this.element;
+        return this.#element;
     }
 
     removeElement() {
-        this.element = null;
+        this.#element = null;
     }
 }

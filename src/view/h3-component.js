@@ -1,24 +1,31 @@
 import { createElement } from '../framework/render.js';
 
-function createTaskComponentTemplate(task) {
-    return `<li class="task">${task}</li>`;
+
+function createH3ComponentTemplate(text) {
+    return (
+        `<h3>${text}</h3>`
+    );
 }
 
-export default class TaskComponent {
-    constructor(task) {
-        this.task = task;
+
+export default class H3Component {
+    constructor(text) {
+        this.text = text;
     }
 
     getTemplate() {
-        return createTaskComponentTemplate(this.task);
+        return createH3ComponentTemplate(this.text);
     }
+
 
     getElement() {
         if (!this.element) {
             this.element = createElement(this.getTemplate());
         }
+
         return this.element;
     }
+
 
     removeElement() {
         this.element = null;

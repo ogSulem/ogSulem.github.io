@@ -3,7 +3,7 @@ import { createElement } from '../framework/render.js';
 function createTaskBoardComponentTemplate() {
     return `
             <section class="task-board">
-                
+            
             </section>
         `;
 }
